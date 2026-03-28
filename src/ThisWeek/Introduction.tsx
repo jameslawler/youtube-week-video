@@ -26,7 +26,7 @@ export const Introduction: React.FC<{}> = () => {
         <AnimatedText
           text="Week"
           color="#FFF"
-          startLeftPercent={60}
+          startLeftPercent={70}
           moveDirection="right"
         />
       </Sequence>

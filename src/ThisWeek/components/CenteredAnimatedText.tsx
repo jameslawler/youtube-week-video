@@ -2,15 +2,14 @@ import React from "react";
 import { useCurrentFrame, spring, interpolate } from "remotion";
 import { loadFont } from "@remotion/google-fonts/ArchivoBlack";
 
-type AnimatedTextProps = {
+type Props = {
   text: string;
   color: string;
-  startLeftPercent: number; // starting horizontal position in %
-  moveDirection: "left" | "right" | "up" | "down"; // direction to move
+  moveDirection: "left" | "right" | "up" | "down";
   fontSize?: number;
-  moveDistancePercent?: number; // optional: how far to move
-  topPercent?: number; // optional vertical position
-  durationFrames?: number; // optional duration of animation
+  moveDistancePercent?: number;
+  topPercent?: number;
+  durationFrames?: number;
 };
 
 const { fontFamily } = loadFont("normal", {
@@ -18,15 +17,14 @@ const { fontFamily } = loadFont("normal", {
   subsets: ["latin"],
 });
 
-export const AnimatedText: React.FC<AnimatedTextProps> = ({
+export const CenteredAnimatedText: React.FC<Props> = ({
   text,
   color,
-  startLeftPercent,
   moveDirection,
   fontSize = 150,
-  moveDistancePercent = 5, // default move 5%
-  topPercent = 40, // default top
-  durationFrames = 15, // default duration
+  moveDistancePercent = 5,
+  topPercent = 40,
+  durationFrames = 15,
 }) => {
   const frame = useCurrentFrame();
 
@@ -57,10 +55,10 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
           moveDirection === "up" || moveDirection === "down"
             ? `${topPercent + move}%`
             : `${topPercent}%`,
-        left:
-          moveDirection === "left" || moveDirection === "right"
-            ? `${startLeftPercent + move}%`
-            : `${startLeftPercent}%`,
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
         color,
         fontSize,
         fontFamily,
