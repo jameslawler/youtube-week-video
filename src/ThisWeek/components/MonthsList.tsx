@@ -24,10 +24,21 @@ const months = [
 
 interface Props {
   selectedDay: Date;
+  highlightSelectedAtFrame: number;
 }
 
-export const MonthsList: React.FC<Props> = ({ selectedDay }) => {
+export const MonthsList: React.FC<Props> = ({
+  selectedDay,
+  highlightSelectedAtFrame,
+}) => {
   const frame = useCurrentFrame();
+
+  const scale = spring({
+    frame: Math.max(0, frame - highlightSelectedAtFrame),
+    fps: 30,
+    from: 0.5,
+    to: 1,
+  });
 
   const left = spring({
     frame,
@@ -44,34 +55,40 @@ export const MonthsList: React.FC<Props> = ({ selectedDay }) => {
     <AbsoluteFill>
       <div
         style={{
+          height: "100%",
           position: "absolute",
-          top: "5%",
-          left: 88 + left + "%",
+          right: 30 - left,
           display: "flex",
           flexDirection: "column",
+          justifyContent: "center",
           gap: "40px",
         }}
       >
         {months.map((m, i) => {
-          const isSelected = i === selectedDay.getMonth();
+          const isSelected = i === 8; //selectedDay.getMonth();
+          const canHighlight = frame >= highlightSelectedAtFrame;
 
           return (
             <div
               key={m.short}
               style={{
-                width: 175,
                 height: 40,
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "right",
+                justifyContent: "center",
+                backgroundColor: isSelected ? "green" : "",
                 fontSize: isSelected ? 50 : 30,
+                border: isSelected ? "4px solid #555" : "",
+                borderRadius: isSelected ? "50px" : "",
+                padding: isSelected ? "40px" : "",
                 color: "#fff",
                 fontFamily,
                 textShadow: "0px 0px 20px rgba(0,0,0,0.7)",
                 opacity,
+                transform: canHighlight && isSelected ? `scale(${scale})` : "",
               }}
             >
-              {isSelected ? m.long : m.short}
+              {isSelected ? m.long : m.long}
             </div>
           );
         })}

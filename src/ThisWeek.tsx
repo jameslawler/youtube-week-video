@@ -47,7 +47,7 @@ export const ThisWeek: React.FC<z.infer<typeof myCompSchema>> = ({}) => {
           />
           {daysOfTheWeek.map((day, index) => (
             <>
-              <TransitionSeries.Sequence durationInFrames={300}>
+              <TransitionSeries.Sequence durationInFrames={600}>
                 <Day
                   daysOfTheWeek={daysOfTheWeek}
                   selectedDay={day}

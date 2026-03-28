@@ -5,6 +5,7 @@ import { FallingEmojiBackground } from "./backgrounds/FallingEmojiBackground";
 import { MonthsList } from "./components/MonthsList";
 import { DaysList } from "./components/DaysList";
 import { CenteredAnimatedText } from "./components/CenteredAnimatedText";
+import { WrittenDate } from "./components/WrittenDate";
 
 interface Props {
   daysOfTheWeek: Date[];
@@ -32,41 +33,19 @@ export const Day: React.FC<Props> = ({
           topPercent={30}
           moveDirection="left"
         />
-        <DaysList daysOfTheWeek={daysOfTheWeek} selectedDay={selectedDay} />
-        <MonthsList selectedDay={selectedDay} />
       </Sequence>
 
-      <Sequence from={70}>
-        <AnimatedText
-          text={selectedDay.getDate().toString().padStart(2, "0")}
-          color="#FFF"
-          fontSize={100}
-          topPercent={60}
-          startLeftPercent={32}
-          moveDirection="up"
+      <Sequence from={90}>
+        <DaysList
+          daysOfTheWeek={daysOfTheWeek}
+          selectedDay={selectedDay}
+          highlightSelectedAtFrame={60}
         />
+        <MonthsList selectedDay={selectedDay} highlightSelectedAtFrame={210} />
       </Sequence>
 
-      <Sequence from={100}>
-        <AnimatedText
-          text={(selectedDay.getMonth() + 1).toString().padStart(2, "0")}
-          color="#FFF"
-          fontSize={100}
-          topPercent={60}
-          startLeftPercent={44}
-          moveDirection="up"
-        />
-      </Sequence>
-
-      <Sequence from={130}>
-        <AnimatedText
-          text={selectedDay.getFullYear().toString()}
-          color="#FFF"
-          fontSize={100}
-          topPercent={60}
-          startLeftPercent={56}
-          moveDirection="up"
-        />
+      <Sequence from={150}>
+        <WrittenDate selectedDay={selectedDay} />
       </Sequence>
     </AbsoluteFill>
   );
