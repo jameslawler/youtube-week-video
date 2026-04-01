@@ -68,7 +68,7 @@ export const DaysList: React.FC<Props> = ({
                 backgroundColor: isSelected ? "green" : "",
                 fontSize: isSelected ? 50 : 30,
                 border: isSelected ? "4px solid #555" : "",
-                borderRadius: isSelected ? "50%" : "",
+                borderRadius: isSelected ? "30px" : "",
                 padding: isSelected ? "40px" : "",
                 color: "#fff",
                 fontFamily,

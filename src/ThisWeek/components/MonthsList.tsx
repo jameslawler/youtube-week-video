@@ -65,7 +65,7 @@ export const MonthsList: React.FC<Props> = ({
         }}
       >
         {months.map((m, i) => {
-          const isSelected = i === 8; //selectedDay.getMonth();
+          const isSelected = i === selectedDay.getMonth();
           const canHighlight = frame >= highlightSelectedAtFrame;
 
           return (
@@ -79,7 +79,7 @@ export const MonthsList: React.FC<Props> = ({
                 backgroundColor: isSelected ? "green" : "",
                 fontSize: isSelected ? 50 : 30,
                 border: isSelected ? "4px solid #555" : "",
-                borderRadius: isSelected ? "50px" : "",
+                borderRadius: isSelected ? "30px" : "",
                 padding: isSelected ? "40px" : "",
                 color: "#fff",
                 fontFamily,

@@ -14,7 +14,7 @@ const { fontFamily } = loadFont("normal", {
 });
 
 interface Props {
-  questionType: "text" | "image";
+  questionType: string;
   questionData: string;
 }
 

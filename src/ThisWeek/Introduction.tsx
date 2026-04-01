@@ -4,7 +4,10 @@ import { Logo } from "./components/Logo";
 import { AnimatedText } from "./components/AnimatedText";
 import { RotatingStarburst } from "./backgrounds/RotatingStarburst";
 
-export const Introduction: React.FC<{}> = () => {
+export const Introduction: React.FC<{
+  titleWord1: string;
+  titleWord2: string;
+}> = ({ titleWord1, titleWord2 }) => {
   return (
     <AbsoluteFill>
       <RotatingStarburst />
@@ -15,7 +18,7 @@ export const Introduction: React.FC<{}> = () => {
 
       <Sequence from={50}>
         <AnimatedText
-          text="This"
+          text={titleWord1}
           color="#FFF"
           startLeftPercent={20}
           moveDirection="left"
@@ -24,7 +27,7 @@ export const Introduction: React.FC<{}> = () => {
 
       <Sequence from={50}>
         <AnimatedText
-          text="Week"
+          text={titleWord2}
           color="#FFF"
           startLeftPercent={70}
           moveDirection="right"

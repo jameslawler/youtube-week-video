@@ -1,8 +1,11 @@
 import "./index.css";
 import { Composition } from "remotion";
 import { ThisWeek } from "./ThisWeek";
+import { data } from "./data/20260330";
 
 export const RemotionRoot: React.FC = () => {
+  const { titleWord1, titleWord2, startDate, daysData } = data;
+
   return (
     <>
       <Composition
@@ -13,10 +16,10 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         defaultProps={{
-          titleText: "Welcome to Remotion",
-          titleColor: "#000000",
-          logoColor1: "#91EAE4",
-          logoColor2: "#86A8E7",
+          titleWord1,
+          titleWord2,
+          startDate: new Date(startDate),
+          daysData,
         }}
       />
     </>
