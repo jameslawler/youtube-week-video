@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, Sequence } from "remotion";
+import { AbsoluteFill, Html5Audio, Sequence, staticFile } from "remotion";
 import { Logo } from "./components/Logo";
 import { AnimatedText } from "./components/AnimatedText";
 import { RotatingStarburst } from "./backgrounds/RotatingStarburst";
@@ -7,10 +7,11 @@ import { RotatingStarburst } from "./backgrounds/RotatingStarburst";
 export const Introduction: React.FC<{
   titleWord1: string;
   titleWord2: string;
-}> = ({ titleWord1, titleWord2 }) => {
+  durationInFrames: number;
+}> = ({ titleWord1, titleWord2, durationInFrames }) => {
   return (
     <AbsoluteFill>
-      <RotatingStarburst />
+      <RotatingStarburst durationInFames={durationInFrames} />
 
       <Sequence from={35}>
         <Logo />
@@ -31,6 +32,13 @@ export const Introduction: React.FC<{
           color="#FFF"
           startLeftPercent={70}
           moveDirection="right"
+        />
+      </Sequence>
+
+      <Sequence from={150}>
+        <Html5Audio
+          src={staticFile("audio/voices/welcome-back.mp3")}
+          volume={3}
         />
       </Sequence>
     </AbsoluteFill>

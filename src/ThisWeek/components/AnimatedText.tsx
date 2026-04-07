@@ -64,9 +64,10 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
         color,
         fontSize,
         fontFamily,
-        textShadow: "0px 0px 20px rgba(0,0,0,0.7)",
+        textShadow: "8px 8px 8px rgba(0,0,0,0.7)",
         whiteSpace: "nowrap",
         opacity,
+        WebkitTextStroke: "4px black",
       }}
     >
       {text}

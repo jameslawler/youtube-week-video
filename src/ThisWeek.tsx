@@ -1,11 +1,12 @@
-import { AbsoluteFill, useVideoConfig } from "remotion";
+import { AbsoluteFill, useVideoConfig, Html5Audio, staticFile } from "remotion";
 import { z } from "zod";
 import { Introduction } from "./ThisWeek/Introduction";
 import { Day } from "./ThisWeek/Day";
 import { linearTiming, TransitionSeries } from "@remotion/transitions";
-import { clockWipe } from "@remotion/transitions/clock-wipe";
+import { fade } from "@remotion/transitions/fade";
 import { iris } from "@remotion/transitions/iris";
 import { Quiz } from "./ThisWeek/Quiz";
+import { addSound } from "./transitions/add-sound";
 
 export const myCompSchema = z.object({
   titleWord1: z.string(),
@@ -13,12 +14,19 @@ export const myCompSchema = z.object({
   startDate: z.date(),
   daysData: z.array(
     z.object({
+      dayIntroAudio: z.string(),
+      dayWrittenDayAudio: z.string(),
+      dayWrittenMonthAudio: z.string(),
+      dayWrittenYearAudio: z.string(),
+      questionsIntroAudio: z.string(),
       questions: z.array(
         z.object({
           header: z.string(),
+          headerAudio: z.string(),
           type: z.string(),
           data: z.string(),
           answer: z.string(),
+          answerAudio: z.string(),
         }),
       ),
     }),
@@ -50,45 +58,60 @@ export const ThisWeek: React.FC<z.infer<typeof myCompSchema>> = ({
   });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "white" }}>
-      <AbsoluteFill>
-        <TransitionSeries>
-          <TransitionSeries.Sequence durationInFrames={150}>
-            <Introduction titleWord1={titleWord1} titleWord2={titleWord2} />
-          </TransitionSeries.Sequence>
-          <TransitionSeries.Transition
-            presentation={clockWipe({ width, height })}
-            timing={linearTiming({ durationInFrames: 30 })}
-          />
-          {daysOfTheWeek.map((day, index) => (
-            <>
-              <TransitionSeries.Sequence durationInFrames={600}>
-                <Day
-                  daysOfTheWeek={daysOfTheWeek}
-                  selectedDay={day}
-                  backgroundColor={backgroundColors[index]}
-                />
-              </TransitionSeries.Sequence>
-              <TransitionSeries.Transition
-                presentation={iris({ width, height })}
-                timing={linearTiming({ durationInFrames: 15 })}
+    <>
+      <Html5Audio src={staticFile("audio/background.mp3")} volume={0.05} loop />
+      <AbsoluteFill style={{ backgroundColor: "white" }}>
+        <AbsoluteFill>
+          <TransitionSeries>
+            <TransitionSeries.Sequence durationInFrames={500}>
+              <Introduction
+                titleWord1={titleWord1}
+                titleWord2={titleWord2}
+                durationInFrames={500}
               />
-              <TransitionSeries.Sequence
-                durationInFrames={450 * daysData[index].questions.length}
-              >
-                <Quiz
-                  questions={daysData[index].questions}
-                  backgroundColor={backgroundColors[index]}
+            </TransitionSeries.Sequence>
+            <TransitionSeries.Transition
+              presentation={fade()}
+              timing={linearTiming({ durationInFrames: 15 })}
+            />
+            {daysOfTheWeek.map((day, index) => (
+              <>
+                <TransitionSeries.Sequence durationInFrames={600}>
+                  <Day
+                    daysOfTheWeek={daysOfTheWeek}
+                    selectedDay={day}
+                    backgroundColor={backgroundColors[index]}
+                    dayIntroAudio={daysData[index].dayIntroAudio}
+                    dayWrittenDayAudio={daysData[index].dayWrittenDayAudio}
+                    dayWrittenMonthAudio={daysData[index].dayWrittenMonthAudio}
+                    dayWrittenYearAudio={daysData[index].dayWrittenYearAudio}
+                  />
+                </TransitionSeries.Sequence>
+                <TransitionSeries.Transition
+                  presentation={iris({ width, height })}
+                  timing={linearTiming({ durationInFrames: 15 })}
                 />
-              </TransitionSeries.Sequence>
-              <TransitionSeries.Transition
-                presentation={clockWipe({ width, height })}
-                timing={linearTiming({ durationInFrames: 30 })}
-              />
-            </>
-          ))}
-        </TransitionSeries>
+                <TransitionSeries.Sequence
+                  durationInFrames={590 * daysData[index].questions.length}
+                >
+                  <Quiz
+                    questions={daysData[index].questions}
+                    backgroundColor={backgroundColors[index]}
+                  />
+                </TransitionSeries.Sequence>
+                <TransitionSeries.Transition
+                  presentation={addSound(
+                    fade(),
+                    staticFile("audio/effects/swoosh.mp3"),
+                    0.1,
+                  )}
+                  timing={linearTiming({ durationInFrames: 30 })}
+                />
+              </>
+            ))}
+          </TransitionSeries>
+        </AbsoluteFill>
       </AbsoluteFill>
-    </AbsoluteFill>
+    </>
   );
 };

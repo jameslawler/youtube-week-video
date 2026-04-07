@@ -104,7 +104,7 @@ export const FallingEmojiBackground: React.FC<FallingEmojiProps> = ({
               left: `${position.left}%`,
               fontSize: "120px",
               userSelect: "none",
-              opacity: 0.05,
+              opacity: 0.15,
               filter: "grayscale(1) brightness(1)",
             }}
           >

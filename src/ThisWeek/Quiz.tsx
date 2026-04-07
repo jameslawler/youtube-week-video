@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, Sequence } from "remotion";
+import { AbsoluteFill, Html5Audio, Sequence, staticFile } from "remotion";
 import { FallingEmojiBackground } from "./backgrounds/FallingEmojiBackground";
 import { QuizQuestion } from "./components/QuizQuestion";
 import { CountdownCircle } from "./components/CountdownCircle";
@@ -7,9 +7,11 @@ import { CenteredAnimatedText } from "./components/CenteredAnimatedText";
 
 type Question = {
   header: string;
+  headerAudio: string;
   type: string;
   data: string;
   answer: string;
+  answerAudio: string;
 };
 
 interface Props {
@@ -21,14 +23,14 @@ export const Quiz: React.FC<Props> = ({ questions, backgroundColor }) => {
   return (
     <AbsoluteFill>
       <FallingEmojiBackground
-        emojis={["😇", "😎"]}
+        emojis={["🥹", "🌲", "🚗", "😎"]}
         backgroundColor={backgroundColor}
         durationSeconds={10}
       />
 
       {questions.map((question, index) => (
-        <Sequence from={400 * index} durationInFrames={400}>
-          <Sequence from={30 * (index + 1)}>
+        <Sequence from={530 * index} durationInFrames={530}>
+          <Sequence from={30}>
             <CenteredAnimatedText
               text={question.header}
               color="#FFF"
@@ -40,20 +42,22 @@ export const Quiz: React.FC<Props> = ({ questions, backgroundColor }) => {
               questionType={question.type}
               questionData={question.data}
             />
+            <Html5Audio src={staticFile(question.headerAudio)} volume={3} />
           </Sequence>
 
-          <Sequence from={30 * (index + 1)} durationInFrames={330}>
+          <Sequence from={30} durationInFrames={330}>
             <CountdownCircle durationSeconds={10} />
           </Sequence>
 
-          <Sequence from={380 * (index + 1)}>
+          <Sequence from={380} durationInFrames={150}>
             <CenteredAnimatedText
               text={question.answer}
               color="#FFF"
-              fontSize={80}
+              fontSize={100}
               topPercent={85}
               moveDirection="up"
             />
+            <Html5Audio src={staticFile(question.answerAudio)} volume={3} />
           </Sequence>
         </Sequence>
       ))}

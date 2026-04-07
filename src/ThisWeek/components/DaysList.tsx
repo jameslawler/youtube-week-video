@@ -65,16 +65,16 @@ export const DaysList: React.FC<Props> = ({
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: isSelected ? "green" : "",
-                fontSize: isSelected ? 50 : 30,
-                border: isSelected ? "4px solid #555" : "",
+                fontSize: isSelected ? 50 : 40,
+                border: isSelected ? "6px solid white" : "",
                 borderRadius: isSelected ? "30px" : "",
                 padding: isSelected ? "40px" : "",
                 color: "#fff",
                 fontFamily,
-                textShadow: "0px 0px 20px rgba(0,0,0,0.7)",
+                textShadow: "2px 2px 2px rgba(0,0,0,0.7)",
                 opacity,
                 transform: canHighlight && isSelected ? `scale(${scale})` : "",
+                WebkitTextStroke: "2px black",
               }}
             >
               {day.getDate().toString().padStart(2, "0")}
