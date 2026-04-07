@@ -6,7 +6,6 @@ import {
   staticFile,
   useVideoConfig,
 } from "remotion";
-import { getAudioData } from "@remotion/media-utils";
 
 import { FallingEmojiBackground } from "./backgrounds/FallingEmojiBackground";
 import { MonthsList } from "./components/MonthsList";
@@ -14,17 +13,22 @@ import { DaysList } from "./components/DaysList";
 import { CenteredAnimatedText } from "./components/CenteredAnimatedText";
 import { WrittenDate } from "./components/WrittenDate";
 
+interface Audio {
+  path: string;
+  durationInSeconds: number;
+}
+
 interface Props {
   daysOfTheWeek: Date[];
   selectedDay: Date;
   backgroundColor: string;
-  dayIntroAudio: string;
-  dayWrittenDayAudio: string;
-  dayWrittenMonthAudio: string;
-  dayWrittenYearAudio: string;
+  dayIntroAudio: Audio;
+  dayWrittenDayAudio: Audio;
+  dayWrittenMonthAudio: Audio;
+  dayWrittenYearAudio: Audio;
 }
 
-export const Day: React.FC<Props> = async ({
+export const Day: React.FC<Props> = ({
   daysOfTheWeek,
   selectedDay,
   backgroundColor,
@@ -34,7 +38,6 @@ export const Day: React.FC<Props> = async ({
   dayWrittenYearAudio,
 }) => {
   const { fps } = useVideoConfig();
-  const dayIntroAudioData = await getAudioData(staticFile(dayIntroAudio));
 
   return (
     <AbsoluteFill>
@@ -51,7 +54,7 @@ export const Day: React.FC<Props> = async ({
           topPercent={30}
           moveDirection="left"
         />
-        <Html5Audio src={staticFile(dayIntroAudio)} volume={3} />
+        <Html5Audio src={staticFile(dayIntroAudio.path)} volume={3} />
       </Sequence>
 
       <Sequence from={90}>
@@ -63,7 +66,7 @@ export const Day: React.FC<Props> = async ({
         <MonthsList selectedDay={selectedDay} highlightSelectedAtFrame={210} />
       </Sequence>
 
-      <Sequence from={dayIntroAudioData.durationInSeconds * fps + 60}>
+      <Sequence from={dayIntroAudio.durationInSeconds * fps + 60}>
         <WrittenDate
           selectedDay={selectedDay}
           dayWrittenDayAudio={dayWrittenDayAudio}

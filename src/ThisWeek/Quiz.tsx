@@ -5,13 +5,18 @@ import { QuizQuestion } from "./components/QuizQuestion";
 import { CountdownCircle } from "./components/CountdownCircle";
 import { CenteredAnimatedText } from "./components/CenteredAnimatedText";
 
+type Audio = {
+  path: string;
+  durationInSeconds: number;
+};
+
 type Question = {
   header: string;
-  headerAudio: string;
+  headerAudio: Audio;
   type: string;
   data: string;
   answer: string;
-  answerAudio: string;
+  answerAudio: Audio;
 };
 
 interface Props {
@@ -42,7 +47,10 @@ export const Quiz: React.FC<Props> = ({ questions, backgroundColor }) => {
               questionType={question.type}
               questionData={question.data}
             />
-            <Html5Audio src={staticFile(question.headerAudio)} volume={3} />
+            <Html5Audio
+              src={staticFile(question.headerAudio.path)}
+              volume={3}
+            />
           </Sequence>
 
           <Sequence from={30} durationInFrames={330}>
@@ -57,7 +65,10 @@ export const Quiz: React.FC<Props> = ({ questions, backgroundColor }) => {
               topPercent={85}
               moveDirection="up"
             />
-            <Html5Audio src={staticFile(question.answerAudio)} volume={3} />
+            <Html5Audio
+              src={staticFile(question.answerAudio.path)}
+              volume={3}
+            />
           </Sequence>
         </Sequence>
       ))}

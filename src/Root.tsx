@@ -1,11 +1,25 @@
 import "./index.css";
-import { Composition } from "remotion";
-import { ThisWeek } from "./ThisWeek";
-import { data } from "./data/20260330";
+import { CalculateMetadataFunction, Composition } from "remotion";
+import { ThisWeek, myCompSchema } from "./ThisWeek";
+import { getData } from "./data/20260330";
+import z from "zod";
+
+const calculateMetadata: CalculateMetadataFunction<
+  z.infer<typeof myCompSchema>
+> = async () => {
+  const { titleWord1, titleWord2, startDate, daysData } = await getData();
+
+  return {
+    props: {
+      titleWord1,
+      titleWord2,
+      startDate: new Date(startDate),
+      daysData,
+    },
+  };
+};
 
 export const RemotionRoot: React.FC = () => {
-  const { titleWord1, titleWord2, startDate, daysData } = data;
-
   return (
     <>
       <Composition
@@ -16,11 +30,12 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         defaultProps={{
-          titleWord1,
-          titleWord2,
-          startDate: new Date(startDate),
-          daysData,
+          titleWord1: "test",
+          titleWord2: "test2",
+          startDate: new Date("2026-01-01"),
+          daysData: [],
         }}
+        calculateMetadata={calculateMetadata}
       />
     </>
   );

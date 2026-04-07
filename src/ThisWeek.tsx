@@ -14,19 +14,40 @@ export const myCompSchema = z.object({
   startDate: z.date(),
   daysData: z.array(
     z.object({
-      dayIntroAudio: z.string(),
-      dayWrittenDayAudio: z.string(),
-      dayWrittenMonthAudio: z.string(),
-      dayWrittenYearAudio: z.string(),
-      questionsIntroAudio: z.string(),
+      dayIntroAudio: z.object({
+        path: z.string(),
+        durationInSeconds: z.number(),
+      }),
+      dayWrittenDayAudio: z.object({
+        path: z.string(),
+        durationInSeconds: z.number(),
+      }),
+      dayWrittenMonthAudio: z.object({
+        path: z.string(),
+        durationInSeconds: z.number(),
+      }),
+      dayWrittenYearAudio: z.object({
+        path: z.string(),
+        durationInSeconds: z.number(),
+      }),
+      questionsIntroAudio: z.object({
+        path: z.string(),
+        durationInSeconds: z.number(),
+      }),
       questions: z.array(
         z.object({
           header: z.string(),
-          headerAudio: z.string(),
+          headerAudio: z.object({
+            path: z.string(),
+            durationInSeconds: z.number(),
+          }),
           type: z.string(),
           data: z.string(),
           answer: z.string(),
-          answerAudio: z.string(),
+          answerAudio: z.object({
+            path: z.string(),
+            durationInSeconds: z.number(),
+          }),
         }),
       ),
     }),

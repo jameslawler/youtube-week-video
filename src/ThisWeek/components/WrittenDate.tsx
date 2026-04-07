@@ -8,37 +8,35 @@ import {
 } from "remotion";
 import { loadFont } from "@remotion/google-fonts/ArchivoBlack";
 import { AnimatedText } from "./AnimatedText";
-import { getAudioData } from "@remotion/media-utils";
 
 const { fontFamily } = loadFont("normal", {
   weights: ["400"],
   subsets: ["latin"],
 });
 
-interface Props {
-  selectedDay: Date;
-  dayWrittenDayAudio: string;
-  dayWrittenMonthAudio: string;
-  dayWrittenYearAudio: string;
+interface Audio {
+  path: string;
+  durationInSeconds: number;
 }
 
-export const WrittenDate: React.FC<Props> = async ({
+interface Props {
+  selectedDay: Date;
+  dayWrittenDayAudio: Audio;
+  dayWrittenMonthAudio: Audio;
+  dayWrittenYearAudio: Audio;
+}
+
+export const WrittenDate: React.FC<Props> = ({
   selectedDay,
   dayWrittenDayAudio,
   dayWrittenMonthAudio,
   dayWrittenYearAudio,
 }) => {
   const { fps } = useVideoConfig();
-  const dayWrittenDayAudioData = await getAudioData(
-    staticFile(dayWrittenDayAudio),
-  );
-  const dayWrittenMonthAudioData = await getAudioData(
-    staticFile(dayWrittenMonthAudio),
-  );
 
-  const monthFrom = dayWrittenDayAudioData.durationInSeconds * fps + 30;
+  const monthFrom = dayWrittenDayAudio.durationInSeconds * fps + 30;
   const yearFrom =
-    monthFrom + dayWrittenMonthAudioData.durationInSeconds * fps + 30;
+    monthFrom + dayWrittenMonthAudio.durationInSeconds * fps + 30;
 
   return (
     <AbsoluteFill>
@@ -82,7 +80,7 @@ export const WrittenDate: React.FC<Props> = async ({
         >
           {"/"}
         </div>
-        <Html5Audio src={staticFile(dayWrittenDayAudio)} volume={3} />
+        <Html5Audio src={staticFile(dayWrittenDayAudio.path)} volume={3} />
       </Sequence>
 
       <Sequence from={monthFrom}>
@@ -95,7 +93,7 @@ export const WrittenDate: React.FC<Props> = async ({
           startLeftPercent={44}
           moveDirection="up"
         />
-        <Html5Audio src={staticFile(dayWrittenMonthAudio)} volume={3} />
+        <Html5Audio src={staticFile(dayWrittenMonthAudio.path)} volume={3} />
       </Sequence>
 
       <Sequence from={yearFrom}>
@@ -108,7 +106,7 @@ export const WrittenDate: React.FC<Props> = async ({
           startLeftPercent={56}
           moveDirection="up"
         />
-        <Html5Audio src={staticFile(dayWrittenYearAudio)} volume={3} />
+        <Html5Audio src={staticFile(dayWrittenYearAudio.path)} volume={3} />
       </Sequence>
     </AbsoluteFill>
   );
