@@ -7,51 +7,48 @@ import { fade } from "@remotion/transitions/fade";
 import { iris } from "@remotion/transitions/iris";
 import { Quiz } from "./ThisWeek/Quiz";
 import { addSound } from "./transitions/add-sound";
+import { Ending } from "./ThisWeek/Ending";
 
-export const myCompSchema = z.object({
+const thisWeekDaySchema = z.object({
+  dayIntroAudio: z.object({
+    path: z.string(),
+    durationInSeconds: z.number(),
+  }),
+  dayWrittenDayAudio: z.object({
+    path: z.string(),
+    durationInSeconds: z.number(),
+  }),
+  dayWrittenMonthAudio: z.object({
+    path: z.string(),
+    durationInSeconds: z.number(),
+  }),
+  dayWrittenYearAudio: z.object({
+    path: z.string(),
+    durationInSeconds: z.number(),
+  }),
+  questions: z.array(
+    z.object({
+      header: z.string(),
+      headerAudio: z.object({
+        path: z.string(),
+        durationInSeconds: z.number(),
+      }),
+      type: z.string(),
+      data: z.string(),
+      answer: z.string(),
+      answerAudio: z.object({
+        path: z.string(),
+        durationInSeconds: z.number(),
+      }),
+    }),
+  ),
+});
+
+export const thisWeekSchema = z.object({
   titleWord1: z.string(),
   titleWord2: z.string(),
   startDate: z.date(),
-  daysData: z.array(
-    z.object({
-      dayIntroAudio: z.object({
-        path: z.string(),
-        durationInSeconds: z.number(),
-      }),
-      dayWrittenDayAudio: z.object({
-        path: z.string(),
-        durationInSeconds: z.number(),
-      }),
-      dayWrittenMonthAudio: z.object({
-        path: z.string(),
-        durationInSeconds: z.number(),
-      }),
-      dayWrittenYearAudio: z.object({
-        path: z.string(),
-        durationInSeconds: z.number(),
-      }),
-      questionsIntroAudio: z.object({
-        path: z.string(),
-        durationInSeconds: z.number(),
-      }),
-      questions: z.array(
-        z.object({
-          header: z.string(),
-          headerAudio: z.object({
-            path: z.string(),
-            durationInSeconds: z.number(),
-          }),
-          type: z.string(),
-          data: z.string(),
-          answer: z.string(),
-          answerAudio: z.object({
-            path: z.string(),
-            durationInSeconds: z.number(),
-          }),
-        }),
-      ),
-    }),
-  ),
+  daysData: z.array(thisWeekDaySchema),
 });
 
 const backgroundColors = [
@@ -64,13 +61,27 @@ const backgroundColors = [
   "#001046",
 ];
 
-export const ThisWeek: React.FC<z.infer<typeof myCompSchema>> = ({
+const getDayDurationInFrames = (
+  day: z.infer<typeof thisWeekDaySchema>,
+  fps: number,
+) => {
+  return (
+    150 +
+    (day.dayIntroAudio.durationInSeconds +
+      day.dayWrittenDayAudio.durationInSeconds +
+      day.dayWrittenMonthAudio.durationInSeconds +
+      day.dayWrittenYearAudio.durationInSeconds) *
+      fps
+  );
+};
+
+export const ThisWeek: React.FC<z.infer<typeof thisWeekSchema>> = ({
   titleWord1,
   titleWord2,
   startDate,
   daysData,
 }) => {
-  const { width, height } = useVideoConfig();
+  const { width, height, fps } = useVideoConfig();
 
   const daysOfTheWeek = Array.from({ length: 7 }, (_, index) => {
     const date = new Date(startDate);
@@ -84,11 +95,11 @@ export const ThisWeek: React.FC<z.infer<typeof myCompSchema>> = ({
       <AbsoluteFill style={{ backgroundColor: "white" }}>
         <AbsoluteFill>
           <TransitionSeries>
-            <TransitionSeries.Sequence durationInFrames={500}>
+            <TransitionSeries.Sequence durationInFrames={350}>
               <Introduction
                 titleWord1={titleWord1}
                 titleWord2={titleWord2}
-                durationInFrames={500}
+                durationInFrames={350}
               />
             </TransitionSeries.Sequence>
             <TransitionSeries.Transition
@@ -97,7 +108,12 @@ export const ThisWeek: React.FC<z.infer<typeof myCompSchema>> = ({
             />
             {daysOfTheWeek.map((day, index) => (
               <>
-                <TransitionSeries.Sequence durationInFrames={600}>
+                <TransitionSeries.Sequence
+                  durationInFrames={getDayDurationInFrames(
+                    daysData[index],
+                    fps,
+                  )}
+                >
                   <Day
                     daysOfTheWeek={daysOfTheWeek}
                     selectedDay={day}
@@ -130,6 +146,9 @@ export const ThisWeek: React.FC<z.infer<typeof myCompSchema>> = ({
                 />
               </>
             ))}
+            <TransitionSeries.Sequence durationInFrames={300}>
+              <Ending message="See You Next Week" durationInFrames={300} />
+            </TransitionSeries.Sequence>
           </TransitionSeries>
         </AbsoluteFill>
       </AbsoluteFill>

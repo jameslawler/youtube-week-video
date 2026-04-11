@@ -24,21 +24,10 @@ const months = [
 
 interface Props {
   selectedDay: Date;
-  highlightSelectedAtFrame: number;
 }
 
-export const MonthsList: React.FC<Props> = ({
-  selectedDay,
-  highlightSelectedAtFrame,
-}) => {
+export const MonthsList: React.FC<Props> = ({ selectedDay }) => {
   const frame = useCurrentFrame();
-
-  const scale = spring({
-    frame: Math.max(0, frame - highlightSelectedAtFrame),
-    fps: 30,
-    from: 0.5,
-    to: 1,
-  });
 
   const left = spring({
     frame,
@@ -66,7 +55,6 @@ export const MonthsList: React.FC<Props> = ({
       >
         {months.map((m, i) => {
           const isSelected = i === selectedDay.getMonth();
-          const canHighlight = frame >= highlightSelectedAtFrame;
 
           return (
             <div
@@ -84,7 +72,6 @@ export const MonthsList: React.FC<Props> = ({
                 fontFamily,
                 textShadow: "2px 2px 2px rgba(0,0,0,0.7)",
                 opacity,
-                transform: canHighlight && isSelected ? `scale(${scale})` : "",
                 WebkitTextStroke: "2px black",
               }}
             >

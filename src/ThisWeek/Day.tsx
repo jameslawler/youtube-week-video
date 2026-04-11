@@ -18,7 +18,7 @@ interface Audio {
   durationInSeconds: number;
 }
 
-interface Props {
+export interface DayProps {
   daysOfTheWeek: Date[];
   selectedDay: Date;
   backgroundColor: string;
@@ -28,7 +28,7 @@ interface Props {
   dayWrittenYearAudio: Audio;
 }
 
-export const Day: React.FC<Props> = ({
+export const Day: React.FC<DayProps> = ({
   daysOfTheWeek,
   selectedDay,
   backgroundColor,
@@ -58,12 +58,8 @@ export const Day: React.FC<Props> = ({
       </Sequence>
 
       <Sequence from={90}>
-        <DaysList
-          daysOfTheWeek={daysOfTheWeek}
-          selectedDay={selectedDay}
-          highlightSelectedAtFrame={60}
-        />
-        <MonthsList selectedDay={selectedDay} highlightSelectedAtFrame={210} />
+        <DaysList daysOfTheWeek={daysOfTheWeek} selectedDay={selectedDay} />
+        <MonthsList selectedDay={selectedDay} />
       </Sequence>
 
       <Sequence from={dayIntroAudio.durationInSeconds * fps + 60}>

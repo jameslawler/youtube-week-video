@@ -55,6 +55,18 @@ export const Quiz: React.FC<Props> = ({ questions, backgroundColor }) => {
 
           <Sequence from={30} durationInFrames={330}>
             <CountdownCircle durationSeconds={10} />
+            <Sequence from={230} durationInFrames={70}>
+              <Html5Audio
+                src={staticFile("audio/effects/bells.mp3")}
+                volume={1}
+              />
+            </Sequence>
+            <Sequence from={300} durationInFrames={30}>
+              <Html5Audio
+                src={staticFile("audio/effects/horn.mp3")}
+                volume={1}
+              />
+            </Sequence>
           </Sequence>
 
           <Sequence from={380} durationInFrames={150}>

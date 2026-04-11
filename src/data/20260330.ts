@@ -1,20 +1,4 @@
-import { staticFile } from "remotion";
-import { getAudioData } from "@remotion/media-utils";
-
-const getAudio = async (path: string) => {
-  if (path === "") {
-    return {
-      path,
-      durationInSeconds: 0,
-    };
-  }
-  const audioData = await getAudioData(staticFile(path));
-
-  return {
-    path,
-    durationInSeconds: audioData.durationInSeconds,
-  };
-};
+import { getAudio } from "./audio";
 
 export const getData = async () => {
   return {
@@ -33,7 +17,6 @@ export const getData = async () => {
         dayWrittenYearAudio: await getAudio(
           "audio/voices/day-written/year/2026-01.mp3",
         ),
-        questionsIntroAudio: await getAudio(""),
         questions: [
           {
             header: "Addition",
@@ -61,8 +44,9 @@ export const getData = async () => {
         dayWrittenMonthAudio: await getAudio(
           "audio/voices/day-written/month/03-march.mp3",
         ),
-        dayWrittenYearAudio: await getAudio(""),
-        questionsIntroAudio: await getAudio(""),
+        dayWrittenYearAudio: await getAudio(
+          "audio/voices/day-written/year/2026-01.mp3",
+        ),
         questions: [
           {
             header: "Name the Animal",
@@ -82,8 +66,9 @@ export const getData = async () => {
         dayWrittenMonthAudio: await getAudio(
           "audio/voices/day-written/month/03-march.mp3",
         ),
-        dayWrittenYearAudio: await getAudio(""),
-        questionsIntroAudio: await getAudio(""),
+        dayWrittenYearAudio: await getAudio(
+          "audio/voices/day-written/year/2026-01.mp3",
+        ),
         questions: [
           {
             header: "Addition",
@@ -103,8 +88,9 @@ export const getData = async () => {
         dayWrittenMonthAudio: await getAudio(
           "audio/voices/day-written/month/03-march.mp3",
         ),
-        dayWrittenYearAudio: await getAudio(""),
-        questionsIntroAudio: await getAudio(""),
+        dayWrittenYearAudio: await getAudio(
+          "audio/voices/day-written/year/2026-01.mp3",
+        ),
         questions: [
           {
             header: "Name the Animal",
@@ -124,8 +110,9 @@ export const getData = async () => {
         dayWrittenMonthAudio: await getAudio(
           "audio/voices/day-written/month/03-march.mp3",
         ),
-        dayWrittenYearAudio: await getAudio(""),
-        questionsIntroAudio: await getAudio(""),
+        dayWrittenYearAudio: await getAudio(
+          "audio/voices/day-written/year/2026-01.mp3",
+        ),
         questions: [
           {
             header: "Addition",
@@ -145,8 +132,9 @@ export const getData = async () => {
         dayWrittenMonthAudio: await getAudio(
           "audio/voices/day-written/month/03-march.mp3",
         ),
-        dayWrittenYearAudio: await getAudio(""),
-        questionsIntroAudio: await getAudio(""),
+        dayWrittenYearAudio: await getAudio(
+          "audio/voices/day-written/year/2026-01.mp3",
+        ),
         questions: [
           {
             header: "Name the Animal",
@@ -166,8 +154,9 @@ export const getData = async () => {
         dayWrittenMonthAudio: await getAudio(
           "audio/voices/day-written/month/03-march.mp3",
         ),
-        dayWrittenYearAudio: await getAudio(""),
-        questionsIntroAudio: await getAudio(""),
+        dayWrittenYearAudio: await getAudio(
+          "audio/voices/day-written/year/2026-01.mp3",
+        ),
         questions: [
           {
             header: "Addition",

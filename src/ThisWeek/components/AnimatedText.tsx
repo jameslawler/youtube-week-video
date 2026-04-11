@@ -11,6 +11,7 @@ type AnimatedTextProps = {
   moveDistancePercent?: number; // optional: how far to move
   topPercent?: number; // optional vertical position
   durationFrames?: number; // optional duration of animation
+  transform?: string;
 };
 
 const { fontFamily } = loadFont("normal", {
@@ -27,6 +28,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
   moveDistancePercent = 5, // default move 5%
   topPercent = 40, // default top
   durationFrames = 15, // default duration
+  transform = "",
 }) => {
   const frame = useCurrentFrame();
 
@@ -68,6 +70,7 @@ export const AnimatedText: React.FC<AnimatedTextProps> = ({
         whiteSpace: "nowrap",
         opacity,
         WebkitTextStroke: "4px black",
+        transform,
       }}
     >
       {text}

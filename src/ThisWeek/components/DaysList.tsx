@@ -1,7 +1,6 @@
 import React from "react";
 import { useCurrentFrame, spring, AbsoluteFill, interpolate } from "remotion";
 import { loadFont } from "@remotion/google-fonts/ArchivoBlack";
-import { issue } from "zod/v4/core/util.cjs";
 
 const { fontFamily } = loadFont("normal", {
   weights: ["400"],
@@ -11,22 +10,10 @@ const { fontFamily } = loadFont("normal", {
 interface Props {
   daysOfTheWeek: Date[];
   selectedDay: Date;
-  highlightSelectedAtFrame: number;
 }
 
-export const DaysList: React.FC<Props> = ({
-  daysOfTheWeek,
-  selectedDay,
-  highlightSelectedAtFrame,
-}) => {
+export const DaysList: React.FC<Props> = ({ daysOfTheWeek, selectedDay }) => {
   const frame = useCurrentFrame();
-
-  const scale = spring({
-    frame: Math.max(0, frame - highlightSelectedAtFrame),
-    fps: 30,
-    from: 0.5,
-    to: 1,
-  });
 
   const left = spring({
     frame,
@@ -54,7 +41,6 @@ export const DaysList: React.FC<Props> = ({
       >
         {daysOfTheWeek.map((day) => {
           const isSelected = day === selectedDay;
-          const canHighlight = frame >= highlightSelectedAtFrame;
 
           return (
             <div
@@ -73,7 +59,6 @@ export const DaysList: React.FC<Props> = ({
                 fontFamily,
                 textShadow: "2px 2px 2px rgba(0,0,0,0.7)",
                 opacity,
-                transform: canHighlight && isSelected ? `scale(${scale})` : "",
                 WebkitTextStroke: "2px black",
               }}
             >
