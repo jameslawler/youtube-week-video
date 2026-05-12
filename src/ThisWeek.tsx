@@ -58,7 +58,7 @@ const backgroundColors = [
   "#ff7306",
   "#fe3104",
   "#63009b",
-  "#001046",
+  "#008000",
 ];
 
 const getDayDurationInFrames = (
