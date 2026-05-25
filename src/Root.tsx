@@ -1,7 +1,7 @@
 import "./index.css";
 import { CalculateMetadataFunction, Composition } from "remotion";
 import { ThisWeek, thisWeekSchema } from "./ThisWeek";
-import { getData } from "./data/20260511";
+import { getData } from "./data/20260518";
 import z from "zod";
 
 const calculateMetadata: CalculateMetadataFunction<
@@ -25,7 +25,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="ThisWeek"
         component={ThisWeek}
-        durationInFrames={9990}
+        durationInFrames={9900}
         fps={30}
         width={1920}
         height={1080}
