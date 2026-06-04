@@ -1,7 +1,7 @@
 import "./index.css";
 import { CalculateMetadataFunction, Composition } from "remotion";
 import { ThisWeek, thisWeekSchema } from "./ThisWeek";
-import { getData } from "./data/20260518";
+import { getData } from "./data/20260601";
 import z from "zod";
 
 const calculateMetadata: CalculateMetadataFunction<
